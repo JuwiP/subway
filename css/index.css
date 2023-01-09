@@ -1,0 +1,548 @@
+@charset "utf-8";
+*{margin: 0; padding: 0; line-height: 120%;}
+ul{list-style: none;}
+a{text-decoration: none; color: #666;}
+body{font-size: 16px; color: #666;font-family: "font_ns", sans-serif;}
+/* 완전 처음에 높이값 주면 편함_스크롤을 미리 만드는 것 (ex.height: 5000px;)  */
+
+.header{width: 100%; height: 164px; border-top: 5px solid #009223;}
+.header::after{
+    content: "";
+    position: absolute;
+    width: 100%; height: 1px;
+    background-color: #ddd; 
+    top: 169px; /* 위치설정 높이+보더값 (164+5)px */
+    z-index: 2;
+}
+
+/* 영역을 만들었으니 이제 가운데로 보내야 한다 */
+.header .header-wrap{
+    width: 1170px;
+    height: 100%;
+    margin: 0 auto;
+    display: flex;
+    /* 디스플레이 플렉스는 일단 정렬한다. 그런데 네비는 정렬되지 않아야 하는데... 밑으로 떨어뜨리는 코드를 주고 하면 플렉스렙을 렙 베이시스 100주면 떨어진다. ↓ (근데 바로 변하지는 않음) */
+    flex-wrap: wrap;
+    position: relative;
+}
+.header .logo{text-align: center; flex-basis: 100%; margin-top: 35px;}
+/* 텍스트 얼라인은 영역이 있기에 가운으로 간다
+인라인, 인라인블락은 공간 없어서 안 간다.
+그래서 플렉스 값을 줘야 작동 */
+.header .etc-menu{position: absolute; right: 25px; top: 40px;}
+/* 이 기준점은 24번이 기준 즉 18번(1170px)의 기준 /모르겠으면 백그라운드 컬러 넣어봐라*/
+.header .etc-menu ul{display:flex; align-items: center;}
+.header .etc-menu ul li{position: relative;}
+.header .etc-menu ul li a{display: block; font-size: 13px;}
+/* 떨어지는 값이 다르면 마진을 줘라 (값이 같으면 스페이스 비투윈) ↓ */
+.header .etc-menu ul li:nth-child(2){margin-left: 30px; margin-right: 15px;}
+/* margin 0 15px 0  30px 으로 줘도 된다.(방법은 여러가지) */
+.header .etc-menu ul li:nth-child(2)::after{
+    content: "";
+    position: absolute; width: 3px; height: 3px;
+    background-color: #ddd;
+    top: 50%; margin-top: -2px; left: -16px;}
+/* 33번이 기준으로 얍! 좌표가 절대좌표로 이루어짐 (38번의 값대로 움직움직/포지션앱솔) */
+
+.header .etc-menu ul li:nth-child(3) a{
+    font-size: 0;
+    width: 30px; height: 30px;
+    /* a가 인라인이라서 작동하면 안 되는데 맨 위에 블락으로 바꿨기 때문에 가로세로가먹힘 34번 */
+    background-image: url("../images/icon_utill_global.png");
+}    
+
+.header .nav{flex-basis: 100%; display: flex; height: 59px;
+padding-top: 16px; padding-bottom: 10px; position: relative;
+z-index: 9;}
+/* 위에 플렉스 랩 랩을 줬기에 옆으로 떨어짐 */
+.header .nav ul{width: 990px; margin: 0 auto; height: 69px;
+display: flex; justify-content: space-between; align-items: center;}
+/*얼라인 아이템은 높이(69px)가 있어야 한다  */
+.header .nav ul li{flex-basis: 165px; text-align: center;
+font-weight: bold; font-size: 18px; letter-spacing: -0.04em;
+cursor: pointer; height: 69px; line-height: 67px;}
+/* 세로 길이값(69px)를 줌으로서 주변 커서를 해도 인식을 주기 위해. */
+.header .nav ul li a{display: inline-block; width: 100%; color: #292929;}
+
+.header .nav ul li.on a{color: #009223;}
+
+/* 네비게이션은 여기까지 
+100퍼 쓰기 위해 마진력오토를 없애ㅔ야한다.
+*/
+
+
+.header .submenu{
+    width: 100%;
+    background-color: #fff;
+    transition: 0.2s;
+    padding-top: 40px;
+    margin-top: -41px;
+    height: 0px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+.header .submenu.on{height: 260px;}
+
+.header .submenu .submenu-wrap{
+    width: 990px; margin: 0 auto;
+    display: flex; 
+    justify-content: space-between;
+}
+.header .submenu ul{flex-basis: 165px; text-align: center;
+padding-top: 20px;}
+.header .submenu ul li{height: 35px; transition: 0.2s; opacity: 0;}
+/* 오퍼시티 효과가 필요해서 0준거 _
+헤더-섭메뉴(72번)에 높이 값을 다시 0으로 주고 색도 흰색으로 바꿔라 그럼 사라짐_ (260->0px / #eee-> #fff)*/
+.header .submenu ul li a{padding: 8px 0 9px; display: inline-block;
+width: 100%; font-size: 15px; letter-spacing: -0.05em;}
+.header .submenu ul li a:hover{color: #009223; text-decoration: underline;}
+.header .submenu ul li.on{opacity: 1;}
+
+
+/*  */
+
+
+
+.slide-section{width: 100%; height: 440px; position: relative; overflow: hidden; top: 1px;}
+.slide-section > ul{display: flex;}
+.slide-section > ul li{position: relative;}
+.slide-section > ul li img{width: 100%; height: 440px;}
+
+.slide-section .indicator{position: absolute; right: 365px; bottom: 50px;}
+.slide-section .indicator ul{display: flex;}
+.slide-section .indicator ul li{margin: 0 5px;}
+.slide-section .indicator ul li a{font-size: 0; display: block;
+width: 10px; height: 10px; background-color: #fff; border-radius: 30px; transition: 0.3s;}
+.slide-section .indicator ul li a.on{width: 30px;
+background-color: #ffc300;}
+
+
+/*  */
+
+
+.quick-menu{
+width: 1170px; margin: 0 auto; margin-top: -29px; 
+/* 또는 margin: -30px auto 0 auto */ 
+z-index: 9;position: relative;
+justify-content: flex-end;
+display: flex;}
+/* 저스티파이 컨텐트- 플렉스가 있어야 작동 */
+
+.quick-menu ul{display: flex; flex-basis: 600px;}
+.quick-menu ul li{flex-basis: 300px; height: 80px;
+text-align: center;}
+.quick-menu ul li:nth-child(1){
+    background-color: #ffce32;
+    border-radius: 30px 0 0 0;
+    letter-spacing: -0.02em;
+}
+.quick-menu ul li:nth-child(2){
+    background-color: #009223;
+    border-radius: 0 0 30px 0;
+    letter-spacing: -0.06em;
+}
+
+.quick-menu ul li a{font-size: 22px; padding-top: 26px;
+display: inline-block; width: 100%; font-weight: bold;}
+.quick-menu ul li:nth-child(1) a{color: #292929;}
+.quick-menu ul li:nth-child(1) a::before{
+    content: "";
+    display: inline-block;
+    width: 24px; height: 30px;
+    background-image: url(../images/icon_map.png);
+    vertical-align: middle;
+    margin-right: 13px;
+    position: relative;
+    top: -2px;
+}
+.quick-menu ul li:nth-child(2) a{color: #fff;}
+.quick-menu ul li:nth-child(2) a::before{
+    content: "";
+    display: inline-block;
+    width: 34px; height: 30px;
+    background-image: url(../images/icon_franchise.png);
+    vertical-align: middle;
+    margin-right: 13px;
+    position: relative;
+    top: -2px;
+}
+
+
+
+/*  */
+
+
+.subway-menu{background-color: #fff;
+
+width: 100%;
+padding-bottom: 60px;
+height: 560px;
+}
+.subway-menu .menu-list{
+    width: 1170px; margin: 0 auto;
+    padding-top: 60px; padding-bottom: 33px;
+    display: flex;
+    justify-content: space-between;
+}
+.subway-menu .menu-list h3{
+    color: #292929;
+    font-size: 40px;
+    font-family: "font_sw", serif;
+    padding-top: 17px; 
+    padding-left: 25px;
+    margin-bottom: 1px;
+    height: 60px;
+    background: url(../images/bul_tit.png) 0 12px no-repeat;
+}
+.subway-menu .menu-list ul{
+    display: flex;
+
+    margin-top: 44px;
+}
+.subway-menu .menu-list ul li{
+    padding-left: 25px; margin-left: 23px;
+    font-weight: 300; position: relative;
+}
+
+.subway-menu .menu-list ul li:not(:last-child)::after{
+    content: "";
+    position: absolute;
+    width: 1px; height: 15px;
+    background-color: #ddd;
+    right: -24px; top: 3px;
+}
+.subway-menu .menu-list ul li a{
+    display: inline-block;
+    width: 100%;
+    font-size: 16px;
+    letter-spacing: -0.03em;
+}
+
+.subway-menu .menu-list ul li.on a{
+    color: #009223; font-weight: bold;
+}
+
+
+
+
+
+/*  */
+.subway-menu .menu-content{
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+}
+.subway-menu .menu-content .menu-content-wrap{
+    width: 1200px;
+    height: 100%;
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.subway-menu .menu-content .menu-content-wrap:nth-child(1){
+    display: block;
+}
+.subway-menu .menu-content .menu-wrap{
+    width: 100%; height: 100%;
+    overflow: hidden;
+ }
+.subway-menu .menu-content .menu-area{
+    width: 200%;
+    display: flex;
+    position: relative;
+}
+.subway-menu .menu-content .menu-box{
+    flex-basis: 260;
+    height: 320px;
+    margin-left: 30px;
+    padding: 0 5px;
+    text-align: center;
+    position: relative;
+}
+.subway-menu .menu-content .menu-box::after{
+    content: "";
+    position: absolute;
+    width: 98px; height: 98px;
+    background: url(../images/btn_more.png);
+    left: 50%; top: 50%;
+    margin: -22px 0 0 -42px;
+    opacity: 0;
+}
+
+.subway-menu .menu-content .menu-box img{
+    width: 100%; height: 182px;
+}
+.subway-menu .menu-content .menu-box:hover::after{opacity: 1;
+}
+.subway-menu .menu-content .menu-box:hover img{width: 340px; height: 238px;
+}
+.subway-menu .menu-content .menu-box:hover p{display: none;}
+.subway-menu .menu-content .menu-box:hover h3{font-size: 22px; margin-top: 10px;}
+
+.subway-menu .menu-content .menu-box h3{
+    color: #292929;
+    font-size: 18px;
+    margin-top: -1px;
+    margin-bottom: 8px;
+}
+.subway-menu .menu-content .menu-box p{
+    color: #999;
+    font-size: 13px;
+    line-height: 21px;
+    letter-spacing: -0.04em;
+}
+.subway-menu .menu-content .arrow a{
+   font-size: 0; 
+   position: absolute;
+   top: 128px;
+   width: 50px; height: 50px; overflow: hidden;
+   background: url(../images/icon_event_slider_arr.png);
+   /* 234번에 포지션 렐러티브 줘야 이 포지션이 잡힘 */
+}
+.subway-menu .menu-content .arrow a:nth-child(1){
+    left: -150px;}
+.subway-menu .menu-content .arrow a:nth-child(1):hover{background-position-y: 100%;}
+.subway-menu .menu-content .arrow a:nth-child(2){right: -150px; background-position-x: 100%;}
+.subway-menu .menu-content .arrow a:nth-child(2):hover{background-position-y: 100%;}
+
+
+
+
+
+
+
+
+/*  */
+/*  */
+
+.content{
+    width: 100%; background: url(../images/bg_content.gif) 0 -30px;
+}
+.content .content-wrap{
+    width: 1280px;
+    margin: 0 auto;
+    padding: 80px 0;
+}
+
+.content .content-top{
+    display: flex; width: 100%; height: 300px;
+}
+.content .content-top .content-amuesd{flex-basis: 400px;
+height: 100%; margin-left: 55px; background-image: url(../images/bg_utilization.png);}
+.content .content-top .content-amuesd h3{margin-left:  39px;
+color: #fff; font-size: 28px; line-height: 40px;
+letter-spacing: -0.02em;}
+.content .content-top .content-amuesd h3:nth-child(1){
+    margin: 38px 0 0 39px;
+    letter-spacing: -0.03em;
+}
+.content .content-top .content-amuesd a{
+    display: inline-block;
+    margin: 100px 0 0 41px;
+    width: 92px; height: 36px; line-height: 36px;
+    color: #fff; border: 2px solid #fff;
+    text-align: center; border-radius: 20px; font-weight: 300;
+}
+
+.content .content-top .content-history{flex-basis: 825px;
+height: 100%; background-image: url(../images/img_subway_history.png);}
+
+.content .content-top .content-history h3{
+    color: #fff; margin-left: 410px;
+    font-size: 28px; line-height: 40px;
+    letter-spacing: -0.02em;
+}
+.content .content-top .content-history h3:nth-child(1){
+    margin-top: 38px;
+}
+.content .content-top .content-history a{
+    display: inline-block;
+    margin: 100px 0 0 410px;
+    width: 128px; height: 36px; line-height: 36px;
+    color: #fff; border: 2px solid #fff;
+    text-align: center; border-radius: 20px; font-weight: 300;
+}
+
+
+
+
+.content .content-bottom{width: 100%; height: 100%; margin: 30px 0 0 55px; display: flex;}
+.content .content-bottom .content-notice{display: flex;
+flex-basis: 870px; background-color: #fff; height: 300px;
+border-radius: 30px 0 30px 0; margin-right: 30px;
+}
+
+.content .content-bottom .content-notice .title{margin: 75px 0 0 60px;
+}
+.content .content-bottom .content-notice h3{
+    color: #292929;
+    font-size: 30px;
+    font-family: "font_sw",serif;
+    height: 60px;
+    padding-top: 17px;
+    padding-left: 25px;
+    margin-bottom: 1px;
+    background: url(../images/bul_tit.png) no-repeat 0 0;
+}
+
+.content .content-bottom .content-notice p{
+    text-align: center;
+    line-height: 26px;
+    letter-spacing: -0.03em;
+}
+
+.content .content-bottom .content-notice .text{
+    flex-basis: 100%;
+    margin: 76px 0 0 133.5px;
+}
+.content .content-bottom .content-notice .text ul li:not(:nth-child(1)){
+    margin-top: 21px;
+}
+.content .content-bottom .content-notice .text ul li a{
+    color: #292929; font-size: 16px;
+    letter-spacing: -0.03em;
+    position: relative;
+    transition: 0.2s;
+}
+
+.content .content-bottom .content-notice .text ul li a::after{
+    content: "";
+    width: 0%;
+    height: 1px;
+    background-color: #009223;
+    position: absolute;
+    left: 0; bottom: 0;
+}
+
+.content .content-bottom .content-notice .text ul li a:hover{color: #009223; text-decoration-line: underline;}
+/*  */
+
+.content .content-bottom .content-notice .text > a {
+    display: inline-block;
+    color: #999;
+    font-size: 14px;
+    margin: 33px 0 7px;
+}
+
+.content .content-bottom .content-slide{flex-basis: 270px;
+background-color: #fff; height: 300px; position: relative;
+overflow: hidden; border-radius: 0 30px 0 30px;}
+.content .content-bottom .content-slide > ul{width: 200%; display: flex;}
+.content .content-bottom .content-slide .indicator{position: absolute; right: 15px; top: 20px;}
+.content .content-bottom .content-slide .indicator ul{display: flex;}
+.content .content-bottom .content-slide .indicator ul li{
+    font-size: 0; width: 10px; height: 10px; background-color: #fff;
+    margin: 0 5px; border-radius: 30px; transition: 0.3s; cursor: pointer;
+}
+
+.content .content-bottom .content-slide .indicator ul li.on{
+    width: 30px; background-color: #ffc300;
+}
+
+
+
+
+/*  */
+/*  */
+
+.footer-menu{text-align: center; padding: 40px 0 37px;}
+.footer-menu ul{display: inline-block; overflow: hidden; height: 70px;}
+/* 높이보다 넘는거 지워줌 */
+.footer-menu ul li{float: left; margin-left: 80px; height: 100%; position: relative;}
+.footer-menu ul li:nth-child(1){
+    left: -1px; margin-left: 0;
+}
+.footer-menu ul li a{display: block; height: 70px;
+padding-left: 90px; overflow: hidden; font-size: 0;}
+
+.footer-menu ul li .icon{background: url(../images/icon_quickmenu.png) 0 0 no-repeat;
+width: 70px; height: 70px;
+position: absolute;
+left: 0; top: 0;}
+
+.footer-menu ul li:nth-child(2) .icon{background-position-x: -71px;}
+.footer-menu ul li:nth-child(3) .icon{background-position-x: -140px;}
+.footer-menu ul li:nth-child(4) .icon{background-position-x: -210px;}
+
+.footer-menu ul li p{font-size: 18px;
+color: #292929; font-weight: bold;
+text-align: left;
+margin-top: 11px;
+letter-spacing: -0.04em;}
+
+.footer-menu ul li span{color: #999; font-size: 13px;
+margin-top: 6px;
+display: block;
+font-weight: normal;
+letter-spacing: -0.02em;}
+
+
+/*  */
+/* / */
+
+
+.footer{background: #000;
+padding: 24px 0 18.81px;
+color: #666;
+position: relative;}
+
+.footer::after{
+    content: "";
+    position: absolute; width: 100%; height: 1px;
+    background-color: #3b3b3b;
+    top: 59px;
+}
+
+.footer .footer-wrap{width: 1170px; margin: 0 auto; position: relative;}
+.footer .footer-top{margin-bottom: 25px;}
+.footer .footer-top ul{display: flex;}
+.footer .footer-top ul li{margin-right: 29px; height: 18px;
+position: relative; top: -2px;}
+
+.footer .footer-top ul li:nth-child(2) a{color: #bbb; font-weight: bold;}
+.footer .footer-top ul li:last-child a{letter-spacing: 0.05em;}
+.footer ..footer-top ul li a{display: block; font-size: 14px;
+letter-spacing: -0.05em;}
+
+.footer .footer-bottom span{font-size: 13px; display: inline-block;
+margin-top: 18px; margin-left: 3px;
+padding-left: 9px; letter-spacing: 0; position: relative;}
+
+.footer .footer-bottom span:not(:nth-child(1))::after{
+    content: "";
+    position:  absolute; left: 0; top: 3px;
+    width: 2px; height: 10px; background-color: #666;
+}
+.footer .footer-bottom span:nth-child(1){margin-left: 0; padding-left: 0;}
+.footer .footer-bottom p{
+    font-size: 13px;
+    line-height: 31px;
+    letter-spacing: 0.005em;
+    font-family: "font_sw",serif;
+}
+.footer .sns-link{position: absolute; right: -10px; top: 52px; width: 165px;height: 50px;}
+
+.footer .sns-link ul li{
+    position: absolute;
+    font-size: 0;
+    width: 50px; height: 50px; overflow: hidden;
+    bottom: 0; line-height: 0; cursor: pointer;
+}
+.footer .sns-link ul li::after{
+    transition: 0.3s; 
+    width: 50px; height: 50px; display: block;
+    content: ""; opacity: 0;
+}
+
+.footer .sns-link ul li:nth-child(1){
+    background-image: url(../images/icon_sns_instar.png);
+}
+.footer .sns-link ul li:nth-child(1)::after{background:url(../images/icon_sns_instar.png);}
+.footer .sns-link ul li:nth-child(1):hover::after{opacity: 1;}
+.footer .sns-link ul li:nth-child(2){background-image: url(../images/icon_sns_facebook.png);
+left: 65px;}
+.footer .sns-link ul li:nth-child(2)::after{background-image: url(../images/icon_sns_facebook.png);}
+.footer .sns-link ul li:nth-child(2):hover::after{opacity: 1;}
